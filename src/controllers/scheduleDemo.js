@@ -44,8 +44,8 @@ function sendEmail(to, subject, text) {
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: "cd36412b7016a6",
-      pass: "784894c41ea581",
+      user: "bfb9cfac7ea735",
+      pass: "a8a61a133a0757",
     },
   });
 
