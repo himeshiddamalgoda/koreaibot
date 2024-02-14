@@ -4,6 +4,7 @@ const sheduleRoutes = require('./src/routes/shedule.routes');
 const quoteRoutes = require('./src/routes/quote.routes');
 const contactSalesRoutes = require('./src/routes/contactSales.routes');
 const subscribeNewsRoutes = require('./src/routes/subscribeNews.routes');
+const whitepapersRoutes = require('./src/routes/whitepaper.routes');
 
 const app = express();
 const port = 8080;
@@ -34,6 +35,7 @@ app.use('/api/shedules', sheduleRoutes);
 app.use('/api/quotes', quoteRoutes);
 app.use('/api/contactSales', contactSalesRoutes);
 app.use('/api/subscribeNews', subscribeNewsRoutes);
+app.use('/api/whitepaper', whitepapersRoutes);
 
 app.listen(port, () => {
   console.log(` app listening at http://localhost:${port}`);

@@ -10,6 +10,9 @@ db.schedule = require("./scheduleDemo.js")(mongoose);
 db.quote= require("./requestQuote.js")(mongoose);
 db.contactSales= require("./contactSales.js")(mongoose);
 db.subscribeNews= require("./subNews.js")(mongoose);
+db.whitepaper= require("./whitepaper.js")(mongoose);
+
+
 // db.transaction = require("./transaction.model.js")(mongoose);
 // db.user= require("./user.model.js")(mongoose);
 

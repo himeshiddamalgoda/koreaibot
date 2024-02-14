@@ -1,32 +1,24 @@
 const db = require("../models");
-const Shedules = db.schedule;
-const nodemailer = require("nodemailer");
+const Whitepaper = db.whitepaper;
 
 // Create and Save
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.scheduleName) {
+  if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
 
   // Create
-  const data = new Shedules({
-    name: req.body.scheduleName,
-    phone: req.body.phone,
-    email: req.body.email,
+  const data = new Whitepaper({
+    name: req.body.name,
+    link: req.body.link,
+
   });
 
   // Save in the database
   data
   .save(data)
-  .then((savedData) => {
-    // Send emails using Promise.all
-    return Promise.all([
-      sendEmail(savedData.email, "Schedule Created", "Your schedule has been successfully created."),
-      sendEmail("botadmin@sample.com", "New Demo Request", `Scheduled a new Demo with, ${savedData.name} email: ${savedData.email} phone: ${savedData.phone}`),
-    ]);
-  })
   .then(() => {
     // Both emails sent, now send the response
     res.send(data);
@@ -38,38 +30,13 @@ exports.create = (req, res) => {
   });
 };
 
-// Function to send email using nodemailer
-function sendEmail(to, subject, text) {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: "cd36412b7016a6",
-      pass: "784894c41ea581",
-    },
-  });
 
-  const mailOptions = {
-    from: "your-email@example.com",
-    to: to,
-    subject: subject,
-    text: text,
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
-}
 // Retrieve all  from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 
-  Shedules.find(condition)
+  Whitepaper.find(condition)
     .then(data => {
       res.send(data);
     })
@@ -85,7 +52,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Shedules.findById(id)
+  Whitepaper.findById(id)
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found with id " + id });
@@ -108,7 +75,7 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  Shedules.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Whitepaper.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -127,7 +94,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Shedules.findByIdAndRemove(id, { useFindAndModify: false })
+  Whitepaper.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
